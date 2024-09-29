@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
       integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* Basic styles for body to ensure footer stays at the bottom */
         body {
             margin: 0;
             padding: 0;
@@ -18,17 +17,15 @@
             font-family: Arial, sans-serif;
         }
 
-        /* Ensure the section and other content take up remaining space */
         section {
             flex: 1;
-            padding: 0 20px; /* Adds padding for better layout */
+            padding: 0 20px;
         }
 
-        /* Footer styles */
         footer {
             text-align: center;
             padding: 10px 0;
-            background-color: #f0f0f0; /* Light mode default */
+            background-color: #f0f0f0;
             color: #333;
             font-size: 14px;
             margin-top: auto;
@@ -36,22 +33,19 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Dark mode styles */
         body.dark-mode footer {
             background-color: #333;
             color: #f0f0f0;
         }
 
-        /* Light mode styles */
         body.light-mode footer {
             background-color: #f0f0f0;
             color: #333;
         }
 
-        /* Button styles */
         .access-photos-btn {
             display: block;
-            margin: 20px 0; /* Aligns the button below icons */
+            margin: 20px 0;
             padding: 10px 20px;
             background-color: #52489C;
             color: white;
@@ -67,12 +61,45 @@
             background-color: #6C63FF;
         }
 
-        /* Centering the social icons */
         .social {
             display: flex;
-            justify-content: flex-start; /* Aligns icons to the left */
-            gap: 15px; /* Adds space between the icons */
-            margin-bottom: 20px; /* Adds space below the icons */
+            justify-content: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .viewer-container {
+            display: none;
+            margin-top: 20px;
+            width: 100%;
+            height: 500px;
+        }
+
+        .file-list {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .file-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Updated Styles */
+        .file-list li {
+            margin-bottom: 5px; /* Reduce space between lines */
+        }
+
+        .file-list a {
+            color: #52489C;
+            text-decoration: none;
+            font-size: 12px; /* Smaller font size */
+            line-height: 1.2; /* Reduce line height */
+            display: block; /* Ensure each link occupies its own line */
+        }
+
+        .file-list a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -118,12 +145,25 @@
                         <a href="https://www.instagram.com/me_abhishek_mishra01/" target="_blank" style="--socialAni:2"><i class="fa-brands fa-instagram"></i></a>
                         <a href="https://github.com/CodeWith-Abhishek/mywebsite" target="_blank" style="--socialAni:3"><i class="fa-brands fa-github"></i></a>
                     </div>
-                    <button class="access-photos-btn" onclick="authenticateUser()">Access Photos</button>
+                    <button class="access-photos-btn" onclick="authenticateUser()">Access Certifications(admin)</button>
                 </div>
                 <div class="images">
                     <img src="img.png" alt="" class="img-w">
                 </div>
             </div>
+        </div>
+
+        <!-- File List Section -->
+        <div id="fileList" class="file-list">
+            <h2>Available Certifications</h2>
+            <ul id="fileListItems">
+                <!-- List of files will be inserted here -->
+            </ul>
+        </div>
+
+        <!-- Viewer Section for PDFs or Docs -->
+        <div id="viewerContainer" class="viewer-container">
+            <iframe id="fileViewer" width="100%" height="100%" frameborder="0"></iframe>
         </div>
     </section>
 
@@ -161,10 +201,43 @@
 
             // Check if the entered password matches the reversed time password
             if (password === reversedTimePassword) {
-                window.location.href = "https://drive.google.com/drive/folders/10JZdXJFddTgbc0gBRCuUYYYizUJq1bAy?usp=drive_link"; // Replace with your Google Drive folder link
+                // Display the list of certifications
+                showCertifications();
             } else {
                 alert("Authentication failed. Please try again.");
             }
+        }
+
+        function showCertifications() {
+            // Define the list of available certifications
+            const files = ['Principles of Generative AI Certification.pdf', 'AI Primer Certification Infosys.pdf', 'Chandrayan3 GroIntern.pdf','Digital Marketing Google.pdf','SPORTS&FITNESS.pdf'];
+
+            const fileListContainer = document.getElementById('fileList');
+            const fileListItems = document.getElementById('fileListItems');
+            fileListContainer.style.display = 'block';
+
+            // Clear previous file list
+            fileListItems.innerHTML = '';
+
+            // Add each file to the list
+            files.forEach(file => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = "#";
+                link.textContent = file;
+                link.onclick = function() {
+                    viewFile(file);
+                };
+                listItem.appendChild(link);
+                fileListItems.appendChild(listItem);
+            });
+        }
+
+        function viewFile(file) {
+            const viewerContainer = document.getElementById('viewerContainer');
+            const fileViewer = document.getElementById('fileViewer');
+            viewerContainer.style.display = 'block';
+            fileViewer.src = `Certifications/${file}`;
         }
     </script>
 </body>
