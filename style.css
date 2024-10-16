@@ -372,10 +372,10 @@ li a:hover {
     .main {
         margin-top: 2rem;
     }
-    .flag {
+}
+.flag {
     width: 50px; /* Adjust size according to your preference */
     height: auto;
     margin-left: 10px; /* Space between name and flag */
     vertical-align: middle; /* Align it properly with the text */
-}
 }
